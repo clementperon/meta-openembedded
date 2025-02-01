@@ -10,16 +10,14 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=37b5762e07f0af8c74ce80a8bda4266b"
 DEPENDS = "zlib abseil-cpp"
 DEPENDS:append:class-target = " protobuf-native"
 
-SRCREV = "9d0ec0f92b5b5fdeeda11f9dcecc1872ff378014"
+SRCREV = "b407e8416e3893036aee5af9a12bd9b6a0e2b2e6"
 
-SRC_URI = "gitsm://github.com/protocolbuffers/protobuf.git;branch=25.x;protocol=https \
+SRC_URI = "gitsm://github.com/protocolbuffers/protobuf.git;branch=29.x;protocol=https \
            file://run-ptest \
            file://0001-examples-Makefile-respect-CXX-LDFLAGS-variables-fix-.patch \
+           file://0001-utf8_range-version.patch \
            "
-SRC_URI:append:mips:toolchain-clang = " file://0001-Fix-build-on-mips-clang.patch "
-SRC_URI:append:mipsel:toolchain-clang = " file://0001-Fix-build-on-mips-clang.patch "
-
-UPSTREAM_CHECK_GITTAGREGEX = "v(?P<pver>.(25\.(\d+)))"
+UPSTREAM_CHECK_GITTAGREGEX = "v(?P<pver>.(29\.(\d+)))"
 
 S = "${WORKDIR}/git"
 
