@@ -1,0 +1,43 @@
+From a48ecebea76aed5a4b0fbc3f7f54923b3b4bb02c Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Cl=C3=A9ment=20P=C3=A9ron?= <peron.clem@gmail.com>
+Date: Sun, 2 Feb 2025 18:32:13 +0100
+Subject: [PATCH] move attribute after enum class to fix clang warning
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Building with clang produce the following error:
+text_format.h:55:1: warning: attribute 'visibility' is ignored,
+place it after "enum class" to apply attribute to type declaration [-Wignored-attributes]
+
+The warning occurs because attributes like
+`__attribute__((visibility("default")))` are ignored when placed before
+an `enum class`. This is due to how attributes are parsed in C++.
+
+Moving the attribute after `enum class` ensures it is applied
+correctly to the type declaration.
+
+Signed-off-by: Clément Péron <peron.clem@gmail.com>
+
+Upstream-Status: Submitted [https://github.com/protocolbuffers/protobuf/pull/20198]
+
+---
+ src/google/protobuf/text_format.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/google/protobuf/text_format.h b/src/google/protobuf/text_format.h
+index 980919795..c03cdaca7 100644
+--- a/src/google/protobuf/text_format.h
++++ b/src/google/protobuf/text_format.h
+@@ -51,7 +51,7 @@ PROTOBUF_EXPORT int64_t GetRedactedFieldCount();
+ // formats. A higher-level API must correspond to a greater number than any
+ // lower-level APIs it calls under the hood (e.g kDebugString >
+ // kMemberPrintToString > kPrintWithStream).
+-PROTOBUF_EXPORT enum class FieldReporterLevel {
++enum class PROTOBUF_EXPORT FieldReporterLevel {
+   kNoReport = 0,
+   kPrintMessage = 1,
+   kPrintWithGenerator = 2,
+-- 
+2.47.1
+
