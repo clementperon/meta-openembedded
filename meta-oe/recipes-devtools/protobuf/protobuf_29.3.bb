@@ -16,7 +16,12 @@ SRC_URI = "gitsm://github.com/protocolbuffers/protobuf.git;branch=29.x;protocol=
            file://run-ptest \
            file://0001-examples-Makefile-respect-CXX-LDFLAGS-variables-fix-.patch \
            file://0001-utf8_range-version.patch \
+           file://0001-move-attribute-after-enum-class-to-fix-clang-warning.patch \
            "
+
+SRC_URI:append:mips:toolchain-clang = " file://0001-Fix-build-on-mips-clang.patch "
+SRC_URI:append:mipsel:toolchain-clang = " file://0001-Fix-build-on-mips-clang.patch "
+
 UPSTREAM_CHECK_GITTAGREGEX = "v(?P<pver>.(29\.(\d+)))"
 
 S = "${WORKDIR}/git"
